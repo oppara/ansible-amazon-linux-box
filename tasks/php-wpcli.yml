@@ -1,0 +1,12 @@
+  - name: check wp cli
+    stat: path=/usr/local/bin/wp
+    register: wp_bin
+    tags: wp_cli
+
+  - name: install wp cli
+    get_url:
+      url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+      dest: /usr/local/bin/wp
+      mode: 0755
+    when: not wp_bin.stat.exists
+    tags: wp_cli
